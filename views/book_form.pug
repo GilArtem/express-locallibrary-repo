@@ -1,0 +1,147 @@
+extends layout
+
+block content
+  h1= title
+
+  form(method='POST')
+    div.form-group
+      label(for='title') Название:
+      input#title.form-control(type='text', placeholder='Название книги' name='title' required value=(undefined===book ? '' : book.title) )
+    
+    //- div.form-group
+    //-   label(for='author') Автор:
+    //-   select#author.form-control(name='author' required)
+    //-     option(value='') --Пожалуйста, выберите автора--
+    //-     for author in authors
+    //-       if book
+    //-         if author._id.toString()===book.author._id.toString()
+    //-           option(value=author._id selected) #{author.name}
+    //-         else
+    //-           option(value=author._id) #{author.name}
+    //-       else
+    //-         option(value=author._id) #{author.name}
+
+    div.form-group
+      label(for='author') Автор:
+      select#author.form-control(type='select' placeholder='Выберите автора' name='author' required='true' )
+        for author in authors
+          if book
+            //- Дескриптор GET from, где book.author - это объект, и POST form, где это строка.
+            option(
+              value=author._id
+              selected=(
+                author._id.toString()==book.author._id
+                || author._id.toString()==book.author
+              ) ? 'selected' : false
+            ) #{author.name}
+          else
+            option(value=author._id) #{author.name}
+    div.form-group
+      label(for='summary') Описание:
+      textarea#summary.form-control(placeholder='Описание' name='summary' required)= undefined===book ? '' : book.summary
+    div.form-group
+      label(for='isbn') ISBN:
+      input#isbn.form-control(type='text', placeholder='ISBN13' name='isbn' value=(undefined===book ? '' : book.isbn) required)
+    div.form-group
+      label Жанр:
+      div
+        for genre in genres
+          div(style='display: inline; padding-right:10px;')
+            if genre.checked
+              input.checkbox-input(type='checkbox', name='genre', id=genre._id, value=genre._id, checked)
+            else
+              input.checkbox-input(type='checkbox', name='genre', id=genre._id, value=genre._id)
+            label(for=genre._id) &nbsp;#{genre.name}
+    button.btn.btn-primary(type='submit') Отправить
+
+  if errors
+    ul
+      for error in errors
+        li!= error.msg
+
+
+
+
+//- 1. extends layout
+//- Шаблон расширяет основной макет layout, который содержит базовую структуру HTML-документа (например, <html>, <head>, <body> и т.д.).
+
+//- 2. block content
+//-     h1= title
+//- Определяется блок контента content. Заголовок страницы задается переменной title, значение которой передается в шаблон.
+
+//- 3. form(method='POST')
+//- Создаётся форма с методом отправки POST. Данные формы будут отправляться на сервер с помощью HTTP POST запроса.
+
+//- 4. div.form-group
+//-     label(for='title') Название:
+//-     input#title.form-control(type='text', placeholder='Название книги' name='title' required value=(undefined===book ? '' : book.title) )
+//- Поле для ввода названия книги:
+//- Метка label указывает, что поле предназначено для ввода названия книги.
+//- Поле ввода input с идентификатором title, классом form-control, типом text и атрибутом required для обязательного заполнения.
+//- Значение поля устанавливается на основе переменной book.title (если book определен).
+
+//- 5.  div.form-group
+//-       label(for='author') Автор:
+//-       select#author.form-control(name='author' required)
+//-         option(value='') --Пожалуйста, выберите автора--
+//-         for author in authors
+//-           if book
+//-             if author._id.toString()===book.author._id.toString()
+//-               option(value=author._id selected) #{author.name}
+//-             else
+//-               option(value=author._id) #{author.name}
+//-           else
+//-             option(value=author._id) #{author.name}
+//- Поле для выбора автора книги:
+//- Метка label указывает, что поле предназначено для выбора автора.
+//- Выпадающий список select с идентификатором author и атрибутом required.
+//- Опции списка заполняются из переменной authors.
+//- Если редактируется существующая книга (book определен), то опция автора, соответствующая book.author._id, помечается как выбранная (selected).
+
+//- 6.  div.form-group
+//-       label(for='summary') Описание:
+//-       textarea#summary.form-control(placeholder='Описание' name='summary' required)= undefined===book ? '' : book.summary
+//- Поле для ввода описания книги:
+//- Метка label указывает, что поле предназначено для ввода описания.
+//- Текстовое поле textarea с идентификатором summary, классом form-control и атрибутом required.
+//- Значение поля устанавливается на основе переменной book.summary (если book определен).
+
+//- 7. div.form-group
+//-       label(for='isbn') ISBN:
+//-       input#isbn.form-control(type='text', placeholder='ISBN13' name='isbn' value=(undefined===book ? '' : book.isbn) required)
+//- Поле для ввода ISBN книги:
+//- Метка label указывает, что поле предназначено для ввода ISBN.
+//- Поле ввода input с идентификатором isbn, классом form-control, типом text и атрибутом required.
+//- Значение поля устанавливается на основе переменной book.isbn (если book определен).
+
+//- 8. div.form-group
+//-       label Жанр:
+//-       div
+//-         for genre in genres
+//-           div(style='display: inline; padding-right:10px;')
+//-             if genre.checked
+//-               input.checkbox-input(type='checkbox', name='genre', id=genre._id, value=genre._id, checked)
+//-             else
+//-               input.checkbox-input(type='checkbox', name='genre', id=genre._id, value=genre._id)
+//-             label(for=genre._id) &nbsp;#{genre.name}
+//- Поля для выбора жанра книги:
+//- Метка label указывает, что поле предназначено для выбора жанров.
+//- Перебор массива genres для создания флажков (checkbox) для каждого жанра.
+//- Если жанр помечен как выбранный (genre.checked), то флажок отмечен (checked).
+
+//- 9. button.btn.btn-primary(type='submit') Отправить
+//- Кнопка отправки формы:
+//- Кнопка с классом btn btn-primary и атрибутом type='submit'.
+
+//- 10. if errors
+//-       ul
+//-         for error in errors
+//-           li!= error.msg
+//- Вывод ошибок валидации:
+//- Если есть ошибки (errors определены), то они выводятся в виде списка ul.
+//- Каждый элемент списка li содержит сообщение об ошибке (error.msg).
+
+//- Объяснение кода:
+//- Этот шаблон создает форму для добавления или редактирования книги с полями для названия, автора, описания, ISBN и жанров.
+//- Значения полей устанавливаются на основе данных книги (если книга редактируется).
+//- Если при отправке формы возникают ошибки валидации, они выводятся под формой.

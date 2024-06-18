@@ -1,0 +1,32 @@
+extends layout
+
+block content
+  h1= title
+
+  ul
+    each val in bookinstance_list
+      li
+        a(href=val.url) #{val.book.title} : #{val.imprint} -
+        if val.status=='Available'
+          span.text-success #{val.status}
+        else if val.status=='Maintenance'
+          span.text-danger #{val.status}
+        else
+          span.text-warning #{val.status}
+        if val.status!='Available'
+          //- span  (Due: #{val.due_back} )
+          span  (Должник: #{val.due_back_formatted} )
+
+    else
+      li В этой библиотеке нет экземпляров книг.
+
+
+//- 1. extends layout указывает на то, что данный файл расширяет (extends) файл layout.pug или другой указанный шаблон.
+//- 2. block content определяет блок content, который будет встраиваться в родительский шаблон.
+//- 3. h1= title выводит заголовок h1 с текстом переменной title.
+//- 4. Затем идет цикл each, который проходит по элементам массива bookinstance_list.
+//- 5. Внутри каждого элемента массива создается элемент списка li.
+//- 6. Для каждого элемента создается ссылка <a> на val.url с текстом, содержащим val.book.title и val.imprint.
+//- 7. Далее идет условный оператор if, который проверяет val.status и выводит соответствующее сообщение с классом статуса.
+//- 8. Дополнительно проверяется условие val.status!='Available' и, если выполняется, выводится информация о дате due_back_formatted.
+//- 9. Наконец, если в массиве нет элементов, выводится сообщение "There are no book copies in this library.".

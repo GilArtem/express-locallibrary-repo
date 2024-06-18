@@ -1,0 +1,11 @@
+extends layout 
+
+block content 
+    h1 Отпечаток экземпляра: #{bookinstance.imprint}
+
+    p Вы точно хотите удалить этот экземпляр книги?
+
+    form(method='POST' action='')
+        div.form-group
+                input#bookinstanceid.form-control( type='hidden', name='bookinstanceid', required='true', value=bookinstance._id )
+        button.btn.btn-primary(type='submit') Удалить 

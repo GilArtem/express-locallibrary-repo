@@ -1,0 +1,34 @@
+extends layout
+
+block content
+
+  h1 ID: #{bookinstance._id}
+
+  p #[strong Название: ]
+    a(href=bookinstance.book.url) #{bookinstance.book.title}
+  p #[strong Печать:] #{bookinstance.imprint}
+  p #[strong Статус: ]
+    if bookinstance.status=='Available'
+      span.text-success #{bookinstance.status}
+    else if bookinstance.status=='Maintenance'
+      span.text-danger #{bookinstance.status}
+    else
+      span.text-warning #{bookinstance.status}
+
+  if bookinstance.status!='Available'
+    p #[strong Должен вернуть:] #{bookinstance.due_back_formatted}
+
+  hr
+  p 
+    a(href=bookinstance.url+'/delete') Удалить экземпляр книги
+  p 
+    a(href=bookinstance.url+'/update') Обновить экземпляр книги 
+
+    
+//- 1. Указание на использование шаблона "layout" для данной страницы.
+//- 2. Определение блока "content" для вставки контента.
+//- 3. Вывод заголовка уровня 1 (h1) с указанием ID книги bookinstance._id.
+//- 4. Создание ссылки на название книги bookinstance.book.title с префиксом "Title:".
+//- 5. Вывод информации об издательстве (Imprint) из bookinstance.imprint.
+//- 6. Определение статуса книги: если "Available", выводится зеленый текст "Available"; если "Maintenance", выводится красный текст "Maintenance"; в противном случае, выводится желтый текст.
+//- 7. Проверка статуса книги: если не "Available", выводится информация о дате возврата bookinstance.due_back.

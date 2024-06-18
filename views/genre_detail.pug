@@ -1,0 +1,38 @@
+extends layout
+
+block content
+
+  h1 Жанр: #{genre.name}
+
+  div(style='margin-left:20px;margin-top:20px')
+
+    h4 Книги
+
+    dl
+      each book in genre_books
+        dt
+          a(href=book.url) #{book.title}
+        dd #{book.summary}
+
+      else
+        p Нет книг этого жанра.
+      
+      hr
+      p
+        a(href=genre.url+'/delete') Удалить жанр 
+      p 
+        a(href=genre.url+'/update') Обновить жанр
+
+
+//- 1. extends layout: Указывает, что данный шаблон также расширяет шаблон layout.
+//- 2. block content: Определяет блок контента, в который будет вставлен контент из этого шаблона.
+//- 3. h1 Genre: #{genre.name}: Отображает заголовок h1 с текстом "Genre: " и названием жанра, которое берется из переменной genre.name.
+//- 4. div(style='margin-left:20px;margin-top:20px'): Создает блок div с отступом слева и сверху.
+//- 5. h4 Books: Создает заголовок h4 "Books".
+//- 6. dl: Создает список определений (description list).
+//- 7. each book in genre_books: Используем цикл each для перебора книг в данном жанре. Для каждой книги выполняются следующие действия:
+//- 8. dt: Создает тег определения (definition term).
+//- 9. a(href=book.url) #{book.title}: Создает ссылку на страницу книги с названием книги, которое берется из переменной book.title.
+//- 10. dd #{book.summary}: Добавляет описание книги.
+//- 11. else: Если массив genre_books пуст (т.е. не содержит книг), то выводится сообщение "This genre has no books".
+//- Этот шаблон позволяет отображать название жанра и список книг этого жанра на веб-странице.

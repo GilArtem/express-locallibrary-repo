@@ -1,0 +1,88 @@
+extends layout
+
+block content
+  h1=title
+
+  form(method='POST' action='')
+    
+    div.form-group
+      label(for='first_name') Имя:
+      input#first_name.form-control(type='text', placeholder='Имя (Артем)' name='first_name' required value=(undefined===author ? '' : author.first_name) )
+      label(for='family_name') Фамилия:
+      input#family_name.form-control(type='text', placeholder='Фамилия (Артемов)' name='family_name' required value=(undefined===author ? '' : author.family_name))
+    
+    div.form-group
+      label(for='date_of_birth') Дата рождения:
+      input#date_of_birth.form-control(type='date' name='date_of_birth' value=(undefined===author ? '' : author.date_of_birth) )
+    
+    div.form-group
+      label(for='date_of_death') Дата смерти:
+      input#date_of_death.form-control(type='date' name='date_of_death' value=(undefined===author ? '' : author.date_of_death))
+    
+    button.btn.btn-primary(type='submit') Отправить
+    
+
+  if errors
+    ul
+      for error in errors
+        li!= error.msg
+
+
+//- 1.extends layout:
+//- Указывает, что этот шаблон расширяет базовый шаблон layout.pug. Это означает, что он наследует структуру и стили, определенные в layout.pug.
+
+//- 2.block content:
+//- Открывает блок content, который будет заполняться содержимым, специфичным для этой страницы.
+
+//- 3.h1=title:
+//- Отображает заголовок страницы, используя переменную title. Значение переменной title будет установлено в контроллере, который рендерит этот шаблон.
+
+//- 4.form(method='POST'):
+//- Начинает форму, которая будет отправлена методом POST.
+
+//- 5.div.form-group:
+//- Создает контейнер с классом form-group для стилизации поля ввода и его метки.
+
+//- 6.label(for='first_name') First Name::
+//- Создает метку для поля ввода с идентификатором first_name. Текст метки - "First Name:".
+
+//- 7.input#first_name.form-control(type='text', placeholder='First name (Christian)' name='first_name' required value=(undefined===author ? '' : author.first_name) ):
+//- Создает поле ввода с типом text, идентификатором first_name и классом form-control для стилизации.
+
+//- 8.placeholder='First name (Christian)' задает текст-заполнитель, который показывается, когда поле ввода пустое.
+//-     name='first_name' задает имя поля ввода, которое будет использоваться при отправке формы.
+//-     required указывает, что это поле обязательно для заполнения.
+//-     value=(undefined===author ? '' : author.first_name) задает значение поля ввода. Если переменная author не определена, значение будет пустой строкой. В противном случае, значение будет равно author.first_name.
+
+//- 9.label(for='family_name') Family Name::
+//- Создает метку для поля ввода с идентификатором family_name. Текст метки - "Family Name:".
+
+//- 10.input#family_name.form-control(type='text', placeholder='Family name (Surname)' name='family_name' required value=(undefined===author ? '' : author.family_name)):
+//- Аналогично полю first_name, создает поле ввода для фамилии автора с аналогичными атрибутами и значениями.
+
+//- 11.div.form-group:
+//- Создает еще один контейнер с классом form-group для стилизации следующего поля ввода и его метки.
+
+//- 12.label(for='date_of_birth') Date of birth::
+//- Создает метку для поля ввода с идентификатором date_of_birth. Текст метки - "Date of birth:".
+
+//- 13.input#date_of_birth.form-control(type='date' name='date_of_birth' value=(undefined===author ? '' : author.date_of_birth) ):
+//- Создает поле ввода с типом date для ввода даты рождения автора. Атрибуты аналогичны предыдущим полям ввода, за исключением типа.
+
+//- 14.button.btn.btn-primary(type='submit') Submit:
+//- Создает кнопку с типом submit и классами btn и btn-primary для стилизации. Текст на кнопке - "Submit".
+
+//- 15.if errors:
+//- Проверяет, есть ли ошибки в переменной errors.
+
+//- 16.ul:
+//- Создает ненумерованный список для отображения ошибок, если они есть.
+
+//- 17.for error in errors:
+//- Итерация по массиву errors, который содержит ошибки валидации.
+
+//- 18.li!= error.msg:
+//- Создает элемент списка для каждой ошибки и отображает сообщение об ошибке (error.msg). Использование != позволяет интерпретировать HTML в сообщении об ошибке, если таковой имеется.
+
+//- Итог
+//- Этот шаблон отображает форму для создания или редактирования автора. Он включает поля ввода для имени, фамилии и даты рождения автора, кнопку отправки формы, и отображает ошибки валидации, если они присутствуют. Значения для заголовка страницы, автора и ошибок передаются в шаблон из контроллера, который обрабатывает соответствующий запрос.

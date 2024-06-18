@@ -1,0 +1,116 @@
+extends layout
+
+block content
+  h1=title
+
+  form(method='POST' action='')
+  
+    div.form-group
+      label(for='book') Книга:
+      select#book.form-control(name='book' required)
+        option(value='') --Пожалуйста, выберите книгу--
+        each book in book_list
+          if selected_book==book._id.toString()
+            option(value=book._id, selected) #{book.title}
+          else
+            option(value=book._id) #{book.title}
+
+    div.form-group
+      label(for='imprint') Печать:
+      input#imprint.form-control(type='text' placeholder='Информация об издателе и дате публикации' name='imprint' required value=(undefined===bookinstance ? '' : bookinstance.imprint) )
+    
+    div.form-group
+      label(for='due_back') Дата возврата:
+        //-   Значение даты должно быть установлено в формате, YYYY-MM-DDпоскольку этого ожидают <input>элементы сtype="date" , однако дата не хранится в этом формате, 
+        //-   поэтому нам необходимо преобразовать ее перед установкой значения в элементе управления. Метод due_back_yyyy_mm_dd()добавляется в BookInstanceмодель в следующем разделе.
+      input#due_back.form-control(type='date' name='due_back' value=(undefined===bookinstance ? '' : bookinstance.due_back_yyyy_mm_dd))
+
+    div.form-group
+      label(for='status') Статус:
+      select#status.form-control(name='status' required)
+        option(value='') --Пожалуйста, выберите статус--
+        each val in ['Available', 'Maintenance', 'Loaned', 'Reserved']
+          if undefined===bookinstance || bookinstance.status!=val
+            option(value=val)= val
+          else
+            option(value=val selected)= val
+
+    button.btn.btn-primary(type='submit') Отправить
+
+  if errors
+    ul
+      for error in errors
+        li!= error.msg
+
+
+
+
+//- Примечание. В приведенном выше шаблоне жестко закодированы значения статуса (Обслуживание, Доступность и т. д.) 
+//- и он не «запоминает» введенные пользователем значения. Если вы того пожелаете, рассмотрите возможность повторной реализации списка, 
+//- передачи данных опций из контроллера и установки выбранного значения при повторном отображении формы.
+
+//- 1. extends layout
+//- Шаблон расширяет основной макет layout, который содержит базовую структуру HTML-документа (например, <html>, <head>, <body> и т.д.).
+
+//- 2. block content
+//-   h1=title
+//- Определяется блок контента content. Заголовок страницы задается переменной title, значение которой передается в шаблон.
+
+//- 3. form(method='POST')
+//- Создаётся форма с методом отправки POST. Данные формы будут отправляться на сервер с помощью HTTP POST запроса.
+
+//- 4. div.form-group
+//-       label(for='book') Book:
+//-       select#book.form-control(name='book' required)
+//-         option(value='') --Please select a book--
+//-         for book in book_list
+//-           if selected_book==book._id.toString()
+//-             option(value=book._id, selected) #{book.title}
+//-           else
+//-             option(value=book._id) #{book.title}
+//- Поле для выбора книги:
+//- Метка label указывает, что поле предназначено для выбора книги.
+//- Выпадающий список select с идентификатором book и атрибутом required.
+//- Опции списка заполняются из переменной book_list.
+//- Если выбранная книга (selected_book) равна текущей книге (book), то опция книги помечается как выбранная (selected).
+
+//- 5. div.form-group
+//-       label(for='imprint') Imprint:
+//-       input#imprint.form-control(type='text' placeholder='Publisher and date information' name='imprint' required value=(undefined===bookinstance ? '' : bookinstance.imprint) )
+//- Поле для ввода данных о печати:
+//- Метка label указывает, что поле предназначено для ввода данных о печати.
+//- Поле ввода input с идентификатором imprint, классом form-control, типом text и атрибутом required.
+//- Значение поля устанавливается на основе переменной bookinstance.imprint (если bookinstance определен).
+
+//- 6. div.form-group
+//-       label(for='due_back') Date when book available:
+//-       input#due_back.form-control(type='date' name='due_back' value=(undefined===bookinstance ? '' : bookinstance.due_back_yyyy_mm_dd))
+//- Поле для ввода даты доступности книги:
+//- Метка label указывает, что поле предназначено для ввода даты доступности.
+//- Поле ввода input с идентификатором due_back, классом form-control, типом date.
+
+//- 7. div.form-group
+//-       label(for='status') Status:
+//-       select#status.form-control(name='status' required)
+//-         option(value='') --Please select a status--
+//-         each val in ['Maintenance', 'Available', 'Loaned', 'Reserved']
+//-           if undefined===bookinstance || bookinstance.status!=val
+//-             option(value=val)= val
+//-           else
+//-             option(value=val selected)= val
+//- Поле для выбора статуса книги:
+//- Метка label указывает, что поле предназначено для выбора статуса.
+//- Выпадающий список select с идентификатором status и атрибутом required.
+//- Опции списка задаются в цикле each и берутся из массива ['Maintenance', 'Available', 'Loaned', 'Reserved'].
+//- Если статус текущего экземпляра книги (bookinstance.status) соответствует текущему значению val, то опция помечается как выбранная (selected).
+
+//- 8. button.btn.btn-primary(type='submit') Submit
+//- Кнопка с классом btn btn-primary и атрибутом type='submit'.
+
+//- 9. if errors
+//-     ul
+//-       for error in errors
+//-         li!= error.msg
+//- Вывод ошибок валидации:
+//- Если есть ошибки (errors определены), то они выводятся под формой в виде списка ul.
+//- Каждый элемент списка li содержит сообщение об ошибке (error.msg).

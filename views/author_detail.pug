@@ -1,0 +1,41 @@
+extends layout
+
+block content
+
+  h1 Автор: #{author.name}
+  //- p #{author.date_of_birth} - #{author.date_of_death}
+  //- после использования нового фроматирования чере luxon
+  p #{author.lifespan}
+  div(style='margin-left:20px;margin-top:20px')
+
+    h2(style='font-size: 1.5rem;') Книги
+    if author_books.length
+      dl
+        each book in author_books
+          dt
+            a(href=book.url) #{book.title}
+          dd #{book.summary}
+    else
+      p У этого автора нет книг.
+
+    hr
+    p
+      a(href=author.url+'/delete') Удалить автора
+    p 
+      a(href=author.url+'/update') Обновить автора 
+
+
+//- 1. extends layout - указывает, что шаблон использует другой шаблон с именем layout.
+//- 2. block content - объявляет блок контента, который будет заменен в основном шаблоне.
+//- 3. h1 Author: #{author.name} - выводит заголовок "Author: " и имя автора.
+//- 4. p #{author.date_of_birth} - #{author.date_of_death} - выводит дату рождения и смерти автора.
+//- 5. div(style='margin-left:20px;margin-top:20px') - создает блок div с заданными стилями отступа слева и сверху.
+//- 6. h2(style='font-size: 1.5rem;') Books - выводит подзаголовок "Books" с заданным размером шрифта.
+//- 7. if author_books.length - проверяет, есть ли у автора книги.
+//- 8. dl - создает список определений для отображения книг.
+//- 9. each book in author_books - цикл для перебора книг автора.
+//- 10. dt - создает элемент списка определений для заголовка книги.
+//- 11. a(href=book.url) #{book.title} - выводит ссылку на название книги.
+//- 12. dd #{book.summary} - выводит краткое описание книги.
+//- 13. else - если у автора нет книг.
+//- 14. p This author has no books - выводит сообщение о том, что у автора нет книг.

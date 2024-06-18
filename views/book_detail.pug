@@ -1,0 +1,65 @@
+extends layout
+
+block content
+  h1 Название: #{book.title}
+
+  p #[strong Автор: ]
+    a(href=book.author.url) #{book.author.name}
+  p #[strong Описание:] #{book.summary}
+  p #[strong ISBN:] #{book.isbn}
+  p #[strong Жанр:] 
+    each val, index in book.genre
+      a(href=val.url) #{val.name}
+      if index < book.genre.length - 1
+        |,&nbsp;
+
+  div(style='margin-left:20px;margin-top:20px')
+    h2(style='font-size: 1.5rem;') Копии
+
+    each val in book_instances
+      hr
+      if val.status=='Available'
+        p.text-success #{val.status}
+      else if val.status=='Maintenance'
+        p.text-danger #{val.status}
+      else
+        p.text-warning #{val.status}
+      p #[strong Печать:] #{val.imprint}
+      if val.status!='Available'
+        p #[strong Должен вернуть:] #{val.due_back_formatted}
+      p #[strong Id: ]
+        a(href=val.url) #{val._id}
+
+    else
+      p В библиотеке нет экземпляров этой книги.
+
+    hr
+    p
+      a(href=book.url+'/delete') Удалить книгу
+    p
+      a(href=book.url+'/update') Обновить книгу
+
+
+//- 1. extends layout: Указывает, что данный шаблон также расширяет шаблон layout.
+//- 2. block content: Определяет блок контента, в который будет вставлен контент из этого шаблона.
+//- 3. h1 Title: #{book.title}: Отображает заголовок h1 с текстом "Title: " и названием книги, которое берется из переменной book.title.
+//- 4. p #[strong Author: ]: Создает абзац и жирный текст "Author: ".
+//- 5. a(href=book.author.url) #{book.author.name}: Создает ссылку (a) на страницу автора книги, с названием автора, которое берется из переменной book.author.name.
+//- 6. p #[strong Summary:] #{book.summary}: Отображает абзац с жирным текстом "Summary:" и сожержанием краткого резюме книги.
+//- 7. p #[strong ISBN:] #{book.isbn}: Отображает абзац с жирным текстом "ISBN:" и ISBN книги.
+//- 8. p #[strong Genre: ]: Создаем абзац с жирным текстом "Genre:".
+//- 9. each val, index in book.genre: Используем цикл each для перебора элементов в массиве жанров книги. Для каждого элемента будет выполнено следующее действие.
+//- 10. a(href=val.url) #{val.name}: Создаем ссылку на страницу жанра с названием жанра.
+//- 11. if index < book.genre.length - 1: Проверяем, не последний ли это элемент массива жанров. Если нет, то выводим ,  для разделения жанров.
+//- 12. div(style='margin-left:20px;margin-top:20px'): Создаем блок div с отступом слева и сверху.
+//- 13. h2(style='font-size: 1.5rem;') Copies: Создаем заголовок h2 "Copies" с размером шрифта.
+//- 14. each val in book_instances: Используем цикл each для перебора элементов в массиве экземпляров книги. Для каждого элемента будет выполнено следующее действие.
+//- 15. if val.status=='Available': Проверяем статус экземпляра книги. Если он доступен, отображаем статус текстом зеленого цвета.
+//- 16. else if val.status=='Maintenance': Если экземпляр на обслуживании, то отображаем статус текстом красного цвета.
+//- 17. else: Во всех других случаях отображаем статус текстом оранжевого цвета.
+//- 18. p #[strong Imprint:] #{val.imprint}: Отображаем абзац с описанием места печати (imprint) экземпляра книги.
+//- 19. if val.status!='Available': Проверяем, не доступен ли экземпляр. Если нет, отображаем дату возврата.
+//- 20. p #[strong Id: ]: Отображаем абзац с жирным текстом "Id:" и ID экземпляра книги.
+//- 21. a(href=val.url) #{val._id}: Создаем ссылку на страницу экземпляра с его ID.
+//- 22. else: Если массив экземпляров пуст, выводим сообщение об этом.
+//- Этот шаблон отображает информацию о книге (название, автор, резюме, ISBN, жанры) и о каждом экземпляре книги в библиотеке (статус, место печати, дата возврата и ID).

@@ -1,0 +1,61 @@
+doctype html
+html(lang='en')
+  head
+    title= title
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js')
+    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  body
+    div(class='container-fluid')
+      div(class='row')
+        div(class='col-sm-2')
+          block sidebar
+            ul(class='sidebar-nav')
+              li
+                a(href='/catalog') Дом
+              li
+                a(href='/catalog/books') Все книги
+              li
+                a(href='/catalog/authors') Все авторы
+              li
+                a(href='/catalog/genres') Все жанры
+              li
+                a(href='/catalog/bookinstances') Все экземпляры книг
+              li
+                hr
+              li
+                a(href='/catalog/author/create') Создать нового автора 
+              li
+                a(href='/catalog/genre/create') Создать новый жанр
+              li
+                a(href='/catalog/book/create') Создать новую книгу
+              li
+                a(href='/catalog/bookinstance/create') Создать новый экземпляр книги (копия)
+
+        div(class='col-sm-10')
+          block content
+
+
+//- 1. doctype html: Указывает на тип документа, в данном случае - это HTML.
+//- 2. html(lang='en'): Начало HTML-документа с указанием языка страницы (на английском).
+//- 3. head: Начало секции заголовка документа.
+//- 4. title= title: Определяет заголовок страницы, значение которого подставляется из переменной title.
+//- 5. meta(charset='utf-8'): Указывает на кодировку символов страницы (UTF-8).
+//- 6. meta(name='viewport', content='width=device-width, initial-scale=1'): Задает параметры отображения страницы на мобильных устройствах.
+//- 7. link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'): Подключает стилевые файлы Bootstrap для оформления страницы.
+//- 8. script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js'): Подключает библиотеку jQuery.
+//- 9. script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'): Подключает файл скриптов Bootstrap для работы интерактивных элементов.
+//- 10. link(rel='stylesheet', href='/stylesheets/style.css'): Подключает пользовательский файл стилей для страницы.
+//- 11. body: Начало тела документа.
+//- 12. div(class='container-fluid'): Создает контейнер Bootstrap с шириной, заполняющей всю доступную ширину экрана.
+//- 13. div(class='row'): Строка контейнера.
+//- 14. div(class='col-sm-2'): Элемент сетки Bootstrap с шириной 2 колонки на малых устройствах и выше.
+//- 15. block sidebar: Определяет блок сайдбара, содержимое которого будет вставлено из других дочерних шаблонов.
+//- 16. Внутри блока сайдбара (ul(class='sidebar-nav')): Создается список ссылок для навигации по разделам каталога.
+//- 17. Внутри элементов списка (li): Создаются ссылки на разделы каталога с указанием их адресов.
+//- 18. div(class='col-sm-10'): Элемент сетки Bootstrap с шириной 10 колонок для основного контента страницы.
+//- 19. block content: Определяет блок основного контента, в который будет вставлено содержимое из дочерних шаблонов.
+//- Этот шаблон создает основную разметку страницы каталога сайдбаром и основным контентом.

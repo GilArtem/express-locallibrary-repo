@@ -1,0 +1,66 @@
+extends layout
+
+block content
+  h1 #{title}: #{author.name}
+  p= author.lifespan
+
+  if author_books.length
+
+    p #[strong Удалите следующие книги, прежде чем пытаться удалить этого автора.]
+
+    div(style='margin-left:20px;margin-top:20px')
+
+      h4 Книги
+
+      dl
+      each book in author_books
+        dt
+          a(href=book.url) #{book.title}
+        dd #{book.summary}
+
+  else
+    p Вы точно хотите удалить этого автора?
+
+    form(method='POST' action='')
+      div.form-group
+        input#authorid.form-control( type='hidden',name='authorid', required='true', value=author._id )
+
+      button.btn.btn-primary(type='submit') Удалить
+
+
+//- 1. extends layout
+//-    - Эта строка указывает на то, что данное представление расширяет или наследует родительский шаблон с именем "layout".
+//- 2. block content
+//-    - Эта строка начинает блок содержимого, который будет использоваться в родительском шаблоне.
+//- 3. h1 #{title}: #{author.name}
+//-    - Этот элемент h1 отображает заголовок, который содержит информацию о названии и имени автора.
+//- 4. p= author.lifespan
+//-    - Этот элемент p отображает информацию о жизни, связанную с автором.
+//- 5. if authorbooks.length
+//-    - Этот оператор условия проверяет длину массива `authorbooks для определения, есть ли у автора книги.
+//- 6. p #[strong Delete the following books before attempting to delete this author.]
+//-    - Этот элемент p отображает сообщение пользователю о необходимости удалить связанные книги перед удалением автора.
+//- 7. div(style='margin-left:20px;margin-top:20px')
+//-    - Этот элемент div определяет область с отступом слева и сверху.
+//- 8. h4 Books
+//-    - Этот элемент h4 выводит заголовок "Книги" для списка книг автора.
+//- 9. dl
+//-    - Этот элемент dl создает список определений для отображения информации о книгах.
+//- 10. each book in author_books
+//-    - Этот оператор цикла позволяет перебирать каждую книгу в массиве authorbooks`.
+//- 11. dt
+//-    - Этот элемент dt представляет собой термин (название) в списке определений.
+//- 12. a(href=book.url) #{book.title}
+//-    - Этот элемент a отображает ссылку на книгу с помощью URL и названия книги.
+//- 13. dd #{book.summary}
+//-    - Этот элемент dd представляет собой определение (краткое описание) для соответствующей книги.
+//- 14. else
+//-    - Эта часть кода срабатывает, если у автора нет связанных книг.
+//- 15. p Do you really want to delete this Author?
+//-    - Этот элемент p отображает сообщение пользователю с вопросом о необходимости удаления автора.
+//- 16. form(method='POST' action='')
+//-     - Этот элемент form определяет форму для отправки данных с методом POST и пустым действием.
+//- 17. input#authorid.form-control(type='hidden',name='authorid', required='true', value=author.id )
+//-     - Этот элемент input является скрытым полем ввода, которое содержит ID автора, требуемое для удаления.
+//- 18. button.btn.btn-primary(type='submit') Delete
+//-     - Этот элемент button представляет кнопку для отправки формы с классом стилей и надписью "Delete".
